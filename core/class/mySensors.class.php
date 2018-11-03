@@ -312,13 +312,16 @@ class mySensors extends eqLogic {
 
   public static function sendToController( $ip, $port, $msg ) {
     log::add('mySensors', 'info', $msg);
-    $fp = fsockopen($ip, $port, $errstr);
+    /*$fp = fsockopen($ip, $port, $errstr);
     if (!$fp) {
       echo "ERROR: $errstr<br />\n";
     } else {
       fwrite($fp, $msg);
       fclose($fp);
-    }
+    }*/
+
+    $request = 'mysensors.js?msg=' . urlencode($msg);
+    doxeo::callDoxeoMonitor($request);
   }
 
   public static function saveNetGate($value) {
